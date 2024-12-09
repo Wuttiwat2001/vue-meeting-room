@@ -1,30 +1,36 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue';
+import { Popover } from 'bootstrap';
+const popoverButtonRef = ref(null);
+
+onMounted(() => {
+  Array.from(document.querySelectorAll('button[data-bs-toggle="popover"]'))
+    .forEach(popoverNode => new Popover(popoverNode))
+});
 </script>
 
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <router-view></router-view>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+
+
+  <!-- <button ref="popoverButtonRef" type="button" class="btn btn-secondary" data-bs-container="body"
+    data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
+    Popover on top
+  </button>
+
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Dropdown button
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">Action</a></li>
+      <li><a class="dropdown-item" href="#">Another action</a></li>
+      <li><a class="dropdown-item" href="#">Something else here</a></li>
+    </ul>
+    <router-view></router-view>
+  </div> -->
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
