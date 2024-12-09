@@ -16,7 +16,8 @@ body {
 .card,
 .card-header,
 .form-control,
-.btn {
+.btn,
+.alert {
   border-radius: 0 !important;
 }
 
