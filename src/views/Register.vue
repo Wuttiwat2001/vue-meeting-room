@@ -1,11 +1,16 @@
 <script setup>
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
+import axios from 'axios';
+import { ref } from 'vue';
 
 
 const { errors, defineField, handleSubmit } = useForm({
   validationSchema: yup.object({
-    username: yup.string().min(3, 'กรุณากรอกชื่อผู้ใช้ที่มีความยาวอย่างน้อย 3 ตัวอักษร').required('กรุณากรอกชื่อผู้ใช้'),
+    username: yup.string()
+      .min(3, 'กรุณากรอกชื่อผู้ใช้ที่มีความยาวอย่างน้อย 3 ตัวอักษร')
+      .matches(/^[a-zA-Z0-9]+$/, 'กรุณาใส่เฉพาะตัวอักษรภาษาอังกฤษและตัวเลข')
+      .required('กรุณากรอกชื่อผู้ใช้'),
     password: yup.string().min(6, 'กรุณากรอกรหัสผ่านที่มีความยาวอย่างน้อย 6 ตัวอักษร').required('กรุณากรอกรหัสผ่าน'),
     firstName: yup.string().required('กรุณากรอกชื่อจริง'),
     lastName: yup.string().required('กรุณากรอกนามสกุล'),
@@ -16,10 +21,16 @@ const [username, usernameAttrs] = defineField('username');
 const [password, passwordAttrs] = defineField('password');
 const [firstName, firstNameAttrs] = defineField('firstName');
 const [lastName, lastNameAttrs] = defineField('lastName');
+const errorMessage = ref('');
 
 
 const onSubmit = handleSubmit(values => {
-  console.log(values);
+  axios.post('http://localhost:8080/api/auth/register').then((response) => {
+    console.log(response);
+  }).catch((error) => {
+    console.log(error.response.data.message);
+    errorMessage.value = error.response.data.message;
+  });
 });
 
 </script>
@@ -60,6 +71,12 @@ const onSubmit = handleSubmit(values => {
                   'is-invalid': errors.lastName
                 }" class="form-control">
                 <span v-if="errors.lastName" class="invalid-feedback">{{ errors.lastName }}</span>
+              </div>
+              <div v-if="errorMessage" class="alert alert-warning d-flex justify-content-between align-items-center" role="alert">
+                <div>
+                  {{ errorMessage }}
+                </div>
+                <button @click="errorMessage = ''" type="button" class="btn-close" aria-label="Close"></button>
               </div>
               <div class="form-group d-grid gap-3 mt-4  mb-5">
                 <button class="btn btn-register" type="submit">ลงทะเบียน</button>
