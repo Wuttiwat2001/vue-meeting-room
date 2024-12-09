@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
 
 
-html, body{
+html,
+body {
   font-family: 'Kanit', sans-serif !important;
 }
 
@@ -11,9 +12,30 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+.card,
+.card-header,
+.form-control,
+.btn {
+  border-radius: 0 !important;
+}
+
+.card {
+  border-color: #17a2b8 !important;
+}
+
+.card-header {
+  background-color: #17a2b8 !important;
+  color: #FFFFFF !important;
+}
+
+label {
+  color: #6C757D ;
+  font-weight: 300;
+}
+
+
 #app {
   margin: 0 auto;
   padding: 2rem;
 }
-
-
